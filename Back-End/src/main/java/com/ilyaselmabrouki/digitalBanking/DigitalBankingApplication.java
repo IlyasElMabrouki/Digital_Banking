@@ -1,6 +1,9 @@
 package com.ilyaselmabrouki.digitalBanking;
 
+import com.ilyaselmabrouki.digitalBanking.dtos.BankAccountDTO;
+import com.ilyaselmabrouki.digitalBanking.dtos.CurrentBankAccountDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
+import com.ilyaselmabrouki.digitalBanking.dtos.SavingBankAccountDTO;
 import com.ilyaselmabrouki.digitalBanking.entities.*;
 import com.ilyaselmabrouki.digitalBanking.enums.AccountStatus;
 import com.ilyaselmabrouki.digitalBanking.enums.OperationType;
@@ -35,7 +38,7 @@ public class DigitalBankingApplication {
 			Stream.of("Ilyas", "Anass", "Hamza").forEach(name -> {
 				CustomerDTO customer = new CustomerDTO();
 				customer.setName(name);
-				customer.setEmail(name + "@gmail.com");
+				customer.setEmail(name.toLowerCase() + "@gmail.com");
 				bankAccountService.saveCustomer(customer);
 			});
 
@@ -44,11 +47,17 @@ public class DigitalBankingApplication {
 					bankAccountService.saveCurrentBankAccount(100000,customer.getId(),9000);
 					bankAccountService.saveSavingBankAccount(100000, customer.getId(), 40);
 
-					List<BankAccount> bankAccounts = bankAccountService.getAllBankAccounts();
-					for (BankAccount bankAccount : bankAccounts) {
+					List<BankAccountDTO> bankAccounts = bankAccountService.getAllBankAccounts();
+					for (BankAccountDTO bankAccount : bankAccounts) {
 						for(int i=0;i<10;i++){
-							bankAccountService.credit(bankAccount.getId(), 100000, "Credit");
-							bankAccountService.debit(bankAccount.getId(), 1000, "Debit");
+							String accountId;
+							if(bankAccount instanceof CurrentBankAccountDTO){
+								accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+							}else{
+								accountId = ((SavingBankAccountDTO) bankAccount).getId();
+							}
+							bankAccountService.credit(accountId, 100000, "Credit");
+							bankAccountService.debit(accountId, 1000, "Debit");
 						}
 					}
 				} catch (CustomerNotFoundException e) {

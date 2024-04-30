@@ -1,7 +1,6 @@
 package com.ilyaselmabrouki.digitalBanking.web;
 
 import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
-import com.ilyaselmabrouki.digitalBanking.entities.Customer;
 import com.ilyaselmabrouki.digitalBanking.exceptions.CustomerNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.services.IBankAccountService;
 import lombok.AllArgsConstructor;
