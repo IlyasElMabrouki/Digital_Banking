@@ -47,25 +47,25 @@ public class DigitalBankingApplication {
 					bankAccountService.saveCurrentBankAccount(100000,customer.getId(),9000);
 					bankAccountService.saveSavingBankAccount(100000, customer.getId(), 40);
 
-					List<BankAccountDTO> bankAccounts = bankAccountService.getAllBankAccounts();
-					for (BankAccountDTO bankAccount : bankAccounts) {
-						for(int i=0;i<10;i++){
-							String accountId;
-							if(bankAccount instanceof CurrentBankAccountDTO){
-								accountId = ((CurrentBankAccountDTO) bankAccount).getId();
-							}else{
-								accountId = ((SavingBankAccountDTO) bankAccount).getId();
-							}
-							bankAccountService.credit(accountId, 100000, "Credit");
-							bankAccountService.debit(accountId, 1000, "Debit");
-						}
-					}
 				} catch (CustomerNotFoundException e) {
 					e.printStackTrace();
-				} catch (BankAccountNotFoundException | BalanceNotSufficientException e) {
-                    throw new RuntimeException(e);
-                }
+				}
             });
+
+			List<BankAccountDTO> bankAccounts = bankAccountService.getAllBankAccounts();
+			for (BankAccountDTO bankAccount : bankAccounts) {
+				for(int i=0;i<10;i++){
+					String accountId;
+					if(bankAccount instanceof CurrentBankAccountDTO){
+						accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+					}
+					else{
+						accountId = ((SavingBankAccountDTO) bankAccount).getId();
+					}
+					bankAccountService.credit(accountId, 100000, "Credit");
+					bankAccountService.debit(accountId, 1000, "Debit");
+				}
+			}
 		};
 	}
 }

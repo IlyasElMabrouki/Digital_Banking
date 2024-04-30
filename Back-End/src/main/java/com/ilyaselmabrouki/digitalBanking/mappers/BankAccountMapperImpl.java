@@ -1,8 +1,10 @@
 package com.ilyaselmabrouki.digitalBanking.mappers;
 
+import com.ilyaselmabrouki.digitalBanking.dtos.AccountOperationDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.CurrentBankAccountDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.SavingBankAccountDTO;
+import com.ilyaselmabrouki.digitalBanking.entities.AccountOperation;
 import com.ilyaselmabrouki.digitalBanking.entities.CurrentAccount;
 import com.ilyaselmabrouki.digitalBanking.entities.Customer;
 import com.ilyaselmabrouki.digitalBanking.entities.SavingAccount;
@@ -46,10 +48,16 @@ public class BankAccountMapperImpl {
         return currentBankAccountDTO;
     }
 
-    public  CurrentAccount fromCurrentAccountDTO(CurrentBankAccountDTO currentAccountDTO){
+    public CurrentAccount fromCurrentAccountDTO(CurrentBankAccountDTO currentAccountDTO){
         CurrentAccount currentAccount = new CurrentAccount();
         BeanUtils.copyProperties(currentAccountDTO,currentAccount);
         currentAccount.setCustomer(fromCustomerDTO(currentAccountDTO.getCustomerDTO()));
         return currentAccount;
+    }
+
+    public AccountOperationDTO fromAccountOperation(AccountOperation accountOperation){
+        AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
+        BeanUtils.copyProperties(accountOperation,accountOperationDTO);
+        return accountOperationDTO;
     }
 }

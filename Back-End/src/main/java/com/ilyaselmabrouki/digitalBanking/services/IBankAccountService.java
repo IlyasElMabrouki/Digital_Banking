@@ -1,9 +1,6 @@
 package com.ilyaselmabrouki.digitalBanking.services;
 
-import com.ilyaselmabrouki.digitalBanking.dtos.BankAccountDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.CurrentBankAccountDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.SavingBankAccountDTO;
+import com.ilyaselmabrouki.digitalBanking.dtos.*;
 import com.ilyaselmabrouki.digitalBanking.entities.BankAccount;
 import com.ilyaselmabrouki.digitalBanking.entities.CurrentAccount;
 import com.ilyaselmabrouki.digitalBanking.entities.Customer;
@@ -26,6 +23,8 @@ public interface IBankAccountService {
     List<CustomerDTO> getAllCustomers();
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     List<BankAccountDTO> getAllBankAccounts();
+    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
+    List<AccountOperationDTO> getAccountHistory(String AccountId);
     void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
     void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
     void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
