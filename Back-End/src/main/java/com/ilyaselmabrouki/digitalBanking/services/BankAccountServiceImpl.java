@@ -182,4 +182,11 @@ public class BankAccountServiceImpl implements IBankAccountService{
         this.debit(accountIdSource, amount,"Transfer to " + accountIdDestination);
         this.credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
     }
+
+    @Override
+    public List<CustomerDTO> searchCustomers(String keyword) {
+        return customerRepository.findByNameContains(keyword).stream()
+                .map(customer -> bankAccountMapper.fromCustomer(customer))
+                .collect(Collectors.toList());
+    }
 }
