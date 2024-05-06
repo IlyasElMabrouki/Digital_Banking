@@ -1,10 +1,8 @@
 package com.ilyaselmabrouki.digitalBanking.web;
 
-import com.ilyaselmabrouki.digitalBanking.dtos.AccountHistoryDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.AccountOperationDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.BankAccountDTO;
-import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
+import com.ilyaselmabrouki.digitalBanking.dtos.*;
 import com.ilyaselmabrouki.digitalBanking.exceptions.BankAccountNotFoundException;
+import com.ilyaselmabrouki.digitalBanking.exceptions.CustomerNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.services.IBankAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,19 +16,29 @@ public class BankAccountRestController {
 
     private IBankAccountService bankAccountService;
 
-    @GetMapping("/account/{accountId}")
-    public BankAccountDTO getBankAccount(@PathVariable String accountId) throws BankAccountNotFoundException {
-        return bankAccountService.getBankAccount(accountId);
-    }
-
     @GetMapping("/accounts")
     public List<BankAccountDTO> getAllBankAccounts() {
         return bankAccountService.getAllBankAccounts();
     }
 
+    @GetMapping("/accounts/{customerId}")
+    public List<BankAccountDTO> getAllBankAccounts(@PathVariable Long customerId) {
+        return bankAccountService.getCustomerBankAccounts(customerId);
+    }
+
     @GetMapping("/accounts/search")
     public List<BankAccountDTO> searchAccounts(@RequestParam(name = "keyword", defaultValue = "") String keyword){
         return bankAccountService.searchAccounts(keyword);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/account/save")
+    public BankAccountDTO saveAccount(@RequestBody AccountRequestDTO accountDTO) throws CustomerNotFoundException {
+        if ("CurrentAccount".equals(accountDTO.getType())) {
+            return bankAccountService.saveCurrentBankAccount(accountDTO.getBalance(), accountDTO.getCustomerId(), accountDTO.getOverDraft());
+        } else {
+            return bankAccountService.saveSavingBankAccount(accountDTO.getBalance(), accountDTO.getCustomerId(), accountDTO.getInterestRate());
+        }
     }
 
     @GetMapping("/account/{accountId}/operations")

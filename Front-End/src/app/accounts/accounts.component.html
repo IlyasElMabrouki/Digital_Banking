@@ -1,7 +1,7 @@
 <div class="container mt-2">
   <ng-container *ngIf="accounts | async as listAccounts; else failureOrLoading">
     <div class="card">
-      <div class="card-header">Customers</div>
+      <div class="card-header">Accounts</div>
       <div class="card-body">
         <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
           <div class="input-group">
@@ -16,7 +16,6 @@
             <th>ID</th>
             <th>Balance</th>
             <th>Date</th>
-            <th>Customer</th>
             <th>Type</th>
           </tr>
           </thead>
@@ -25,8 +24,8 @@
             <td>{{a.id}}</td>
             <td>{{a.balance}}</td>
             <td>{{a.createdAt | date: 'dd/MM/yyy'}}</td>
-            <td>{{a.customerDTO.name}}</td>
-            <td>{{a.type}}</td>
+            <td *ngIf="a.type === 'SavingAccount'">Saving Account</td>
+            <td *ngIf="a.type !== 'SavingAccount'">Current Account</td>
           </tr>
           </tbody>
         </table>

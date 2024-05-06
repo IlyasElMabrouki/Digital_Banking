@@ -117,6 +117,18 @@ public class BankAccountServiceImpl implements IBankAccountService{
     }
 
     @Override
+    public List<BankAccountDTO> getCustomerBankAccounts(Long customerId) {
+        List<BankAccount> bankAccounts = bankAccountRepository.findBankAccountsByCustomer_Id(customerId);
+        return bankAccounts.stream()
+                .map(bankAccount -> {
+                    if(bankAccount instanceof CurrentAccount)
+                        return bankAccountMapper.fromCurrentAccount((CurrentAccount) bankAccount);
+                    return bankAccountMapper.fromSavingAccount((SavingAccount) bankAccount);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(accountId)
                 .orElseThrow(()-> new BankAccountNotFoundException("Bank Account Not Found"));

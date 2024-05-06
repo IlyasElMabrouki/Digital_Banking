@@ -23,6 +23,7 @@ public interface IBankAccountService {
     List<CustomerDTO> getAllCustomers();
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     List<BankAccountDTO> getAllBankAccounts();
+    List<BankAccountDTO> getCustomerBankAccounts(Long customerId);
     AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
     List<AccountOperationDTO> getAccountHistory(String AccountId);
     void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;

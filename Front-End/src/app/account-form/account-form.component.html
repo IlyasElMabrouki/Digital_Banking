@@ -1,0 +1,29 @@
+{{accountFormGroup.value | json}}
+<div class="container">
+  <div class="card col-md-6 offset-3">
+    <div class="card-header">New Account</div>
+    <div class="card-body">
+      <form [formGroup]="accountFormGroup" (ngSubmit)="handlerSubmit()">
+        <div class="mb-3">
+          <label>Account Type:</label>
+          <select formControlName="type" class="form-control">
+            <option *ngFor="let type of accountTypes">{{ type }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>Balance:</label>
+          <input type="number" formControlName="balance" class="form-control">
+        </div>
+        <div class="mb-3" *ngIf="accountFormGroup.get('type')?.value === 'CurrentAccount'">
+          <label>Overdraft:</label>
+          <input type="number" formControlName="overDraft" class="form-control">
+        </div>
+        <div class="mb-3" *ngIf="accountFormGroup.get('type')?.value === 'SavingAccount'">
+          <label>Interest Rate:</label>
+          <input type="number" formControlName="interestRate" class="form-control">
+        </div>
+        <button [disabled]="!accountFormGroup.valid" class="btn btn-info" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
