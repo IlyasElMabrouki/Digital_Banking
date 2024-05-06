@@ -189,4 +189,16 @@ public class BankAccountServiceImpl implements IBankAccountService{
                 .map(customer -> bankAccountMapper.fromCustomer(customer))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<BankAccountDTO> searchAccounts(String keyword) {
+        List<BankAccount> bankAccounts = bankAccountRepository.findByCustomer_Name(keyword);
+        return bankAccounts.stream()
+                .map(bankAccount -> {
+                    if(bankAccount instanceof CurrentAccount)
+                        return bankAccountMapper.fromCurrentAccount((CurrentAccount) bankAccount);
+                    return bankAccountMapper.fromSavingAccount((SavingAccount) bankAccount);
+                })
+                .collect(Collectors.toList());
+    }
 }

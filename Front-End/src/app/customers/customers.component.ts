@@ -39,6 +39,8 @@ export class CustomersComponent implements OnInit{
     }
 
     deleteHandler(id: number) {
+      let conf = confirm("Are you sure ?");
+      if (!conf) return;
       this.customerService.deleteCustomer(id).subscribe({
         next: value => {
           this.handleSearchCustomers()

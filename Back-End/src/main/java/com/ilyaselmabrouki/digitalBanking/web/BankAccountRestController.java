@@ -3,6 +3,7 @@ package com.ilyaselmabrouki.digitalBanking.web;
 import com.ilyaselmabrouki.digitalBanking.dtos.AccountHistoryDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.AccountOperationDTO;
 import com.ilyaselmabrouki.digitalBanking.dtos.BankAccountDTO;
+import com.ilyaselmabrouki.digitalBanking.dtos.CustomerDTO;
 import com.ilyaselmabrouki.digitalBanking.exceptions.BankAccountNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.services.IBankAccountService;
 import lombok.AllArgsConstructor;
@@ -17,14 +18,19 @@ public class BankAccountRestController {
 
     private IBankAccountService bankAccountService;
 
-    @GetMapping("/bankAccount/{accountId}")
+    @GetMapping("/account/{accountId}")
     public BankAccountDTO getBankAccount(@PathVariable String accountId) throws BankAccountNotFoundException {
         return bankAccountService.getBankAccount(accountId);
     }
 
-    @GetMapping("/bankAccounts")
+    @GetMapping("/accounts")
     public List<BankAccountDTO> getAllBankAccounts() {
         return bankAccountService.getAllBankAccounts();
+    }
+
+    @GetMapping("/accounts/search")
+    public List<BankAccountDTO> searchAccounts(@RequestParam(name = "keyword", defaultValue = "") String keyword){
+        return bankAccountService.searchAccounts(keyword);
     }
 
     @GetMapping("/account/{accountId}/operations")
