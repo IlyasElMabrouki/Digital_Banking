@@ -37,4 +37,15 @@ export class CustomersComponent implements OnInit{
         })
       )
     }
+
+    deleteHandler(id: number) {
+      this.customerService.deleteCustomer(id).subscribe({
+        next: value => {
+          this.handleSearchCustomers()
+        },
+        error : err => {
+          console.log(err);
+        }
+      })
+    }
 }

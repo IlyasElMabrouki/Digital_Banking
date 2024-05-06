@@ -23,6 +23,11 @@
             <td>{{c.id}}</td>
             <td>{{c.name}}</td>
             <td>{{c.email}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteHandler(c.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>
