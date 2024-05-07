@@ -40,7 +40,7 @@ export class AccountFormComponent implements OnInit{
       next : value => {
         alert("Account has been saved!!")
         this.accountFormGroup.reset()
-        this.router.navigateByUrl("/accounts");
+        this.router.navigateByUrl("/accounts/"+this.customerId);
       },
       error : err => {
         console.log(err);
