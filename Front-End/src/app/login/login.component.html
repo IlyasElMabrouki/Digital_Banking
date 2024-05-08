@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="card col-md-6 offset-3">
+    <div class="card-header">Authentication</div>
+    <div class="card-body">
+      <form [formGroup]="loginformGroup" (ngSubmit)="handlerLogin()">
+        <div class="mb-3">
+          <label class="form-label">Username :</label>
+          <input type="text" formControlName="username" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password :</label>
+          <input type="text" formControlName="password" class="form-control">
+        </div>
+        <button [disabled]="!loginformGroup.valid" class="btn btn-info" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
