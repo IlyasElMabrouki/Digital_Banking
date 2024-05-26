@@ -1,6 +1,7 @@
 package com.ilyaselmabrouki.digitalBanking.web;
 
 import com.ilyaselmabrouki.digitalBanking.dtos.*;
+import com.ilyaselmabrouki.digitalBanking.exceptions.BalanceNotSufficientException;
 import com.ilyaselmabrouki.digitalBanking.exceptions.BankAccountNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.exceptions.CustomerNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.services.IBankAccountService;
@@ -51,5 +52,20 @@ public class BankAccountRestController {
                                                @RequestParam(name = "page", defaultValue = "0") int page,
                                                @RequestParam(name = "size", defaultValue = "5") int size) throws BankAccountNotFoundException {
         return bankAccountService.getAccountHistory(accountId, page, size);
+    }
+
+    @PostMapping("/account/debit")
+    public void debitOperation(@RequestBody OperationRequestDTO operationDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        bankAccountService.debit(operationDTO.getAccountId(), operationDTO.getAmount(), operationDTO.getDescription());
+    }
+
+    @PostMapping("/account/credit")
+    public void creditOperation(@RequestBody OperationRequestDTO operationDTO) throws BankAccountNotFoundException {
+        bankAccountService.credit(operationDTO.getAccountId(), operationDTO.getAmount(), operationDTO.getDescription());
+    }
+
+    @PostMapping("/account/transfer")
+    public void transferOperation(@RequestBody TransferRequestDTO transferDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        bankAccountService.transfer(transferDTO.getAccountIdSource(), transferDTO.getAccountIdDestination(), transferDTO.getAmount());
     }
 }

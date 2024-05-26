@@ -1,0 +1,47 @@
+<div class="container mt-2">
+  <ng-container *ngIf="operations | async as listOperations; else failureOrLoading">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">Operations</div>
+          <div class="col-auto">
+            <button class="btn btn-info" routerLink="/new-operation/{{accountId}}">Add Operation</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let o of listOperations">
+            <td>{{o.id}}</td>
+            <td>{{o.operationDate | date: 'dd/MM/yyy'}}</td>
+            <td>{{o.amount}}</td>
+            <td>{{o.type}}</td>
+            <td>{{o.description}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      Loading ...
+    </ng-template>
+  </ng-template>
+</div>
+

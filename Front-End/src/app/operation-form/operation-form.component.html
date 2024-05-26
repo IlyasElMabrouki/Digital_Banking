@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="card col-md-6 offset-3">
+    <div class="card-header">New Operation</div>
+    <div class="card-body">
+      <form [formGroup]="operationFormGroup" (ngSubmit)="handlerSubmit()">
+        <div class="mb-3">
+          <label>Operation Type:</label>
+          <select formControlName="type" class="form-control">
+            <option *ngFor="let type of operationTypes">{{ type }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>Amount:</label>
+          <input type="number" formControlName="amount" class="form-control">
+        </div>
+        <div class="mb-3" *ngIf="operationFormGroup.get('type')?.value === 'DEBIT' || operationFormGroup.get('type')?.value === 'CREDIT'">
+          <label>Description:</label>
+          <input type="text" formControlName="description" class="form-control">
+        </div>
+        <div class="mb-3" *ngIf="operationFormGroup.get('type')?.value === 'TRANSFER'">
+          <label>Destination Account ID:</label>
+          <input type="text" formControlName="destinationAccountId" class="form-control">
+        </div>
+        <button [disabled]="!operationFormGroup.valid" class="btn btn-info" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

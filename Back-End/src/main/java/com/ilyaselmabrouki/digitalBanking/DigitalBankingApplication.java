@@ -13,6 +13,7 @@ import com.ilyaselmabrouki.digitalBanking.exceptions.CustomerNotFoundException;
 import com.ilyaselmabrouki.digitalBanking.repositories.AccountOperationRepository;
 import com.ilyaselmabrouki.digitalBanking.repositories.BankAccountRepository;
 import com.ilyaselmabrouki.digitalBanking.repositories.CustomerRepository;
+import com.ilyaselmabrouki.digitalBanking.repositories.UserRepository;
 import com.ilyaselmabrouki.digitalBanking.services.BankAccountServiceImpl;
 import com.ilyaselmabrouki.digitalBanking.services.IBankAccountService;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +21,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -33,7 +32,8 @@ public class DigitalBankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner start(IBankAccountService bankAccountService) {
+	public CommandLineRunner start(IBankAccountService bankAccountService, UserRepository userRepository) {
+
 		return args -> {
 			Stream.of("Ilyas", "Anass", "Hamza").forEach(name -> {
 				CustomerDTO customer = new CustomerDTO();
@@ -66,6 +66,8 @@ public class DigitalBankingApplication {
 					bankAccountService.debit(accountId, 1000, "Debit");
 				}
 			}
+
+
 		};
 	}
 }

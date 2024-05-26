@@ -3,7 +3,7 @@ import {AccountService} from "../services/account.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {Account} from "../models/account.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-accounts',
@@ -15,7 +15,10 @@ export class AccountsComponent implements OnInit {
   accounts! : Observable<Array<Account>>;
   errorMessage! : string;
   searchFormGroup! : FormGroup;
-  constructor(private accountService : AccountService, private fb : FormBuilder, private route: ActivatedRoute) {
+  constructor(private accountService : AccountService,
+              private fb : FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -43,6 +46,10 @@ export class AccountsComponent implements OnInit {
         return throwError(err);
       })
     )
+  }
+
+  operationList(id: string){
+    this.router.navigateByUrl("/operations/"+id);
   }
 
 }

@@ -24,7 +24,7 @@ public class CustomerRestController {
     }
 
     @GetMapping("/customers/search")
-    @PreAuthorize("hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('USER')")
     public List<CustomerDTO> customers(@RequestParam(name = "keyword", defaultValue = "") String keyword){
         return bankAccountService.searchCustomers(keyword);
     }

@@ -33,6 +33,11 @@
             <td>{{a.createdAt | date: 'dd/MM/yyy'}}</td>
             <td *ngIf="a.type === 'SavingAccount'">Saving Account</td>
             <td *ngIf="a.type !== 'SavingAccount'">Current Account</td>
+            <td>
+              <button class="btn btn-info" (click)="operationList(a.id)">
+                <i class="bi bi-arrow-bar-right"></i>
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>
